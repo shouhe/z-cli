@@ -2,9 +2,64 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CleanWebpackPlugin =require('clean-webpack-plugin');
 var webpack = require('webpack');
 var path = require('path');
+var fs = require('fs');
+
+function getDirectory(relativePath) {
+  let res = [];
+  let root = path.resolve(__dirname, relativePath);
+
+  let files = fs.readdirSync(root);
+
+  files.forEach(function(file) {
+    let path = `${root}/${file}`;
+    let stat = fs.lstatSync(path);
+
+    if (stat.isDirectory()) {
+      res.push(file)
+    } else {
+      let _file = {};
+      _file.filename =  file.replace(/tpl/, 'html');
+      _file.template = path;
+      _file.js = file.replace(/tpl/, 'js');
+      res.push(_file)
+    }
+  })
+  return res;
+}
+
+function getEntrys() {
+  let data = {};
+  let dirs = getDirectory('./src/pages');
+
+  dirs.forEach(function(item) {
+    data[item] = `./src/pages/${item}/index.js`;
+  });
+  return data;
+}
+
+function getPlugin(tplDirs) {
+  let data = [];
+  tplDirs.forEach(function(item) {
+    console.log(item.js);
+    let _Plugin = new HtmlWebpackPlugin({
+      files: {
+        filename: item.filename,
+        template: item.template,
+        js:  [item.js]
+      }
+    });
+    data.push(_Plugin);
+  })
+  return data;
+}
+
+var entrys = getEntrys();
+var tplDirs = getDirectory('./views');
+var pluginList = getPlugin(tplDirs);
+
 
 module.exports = {
-  entry: "./src/main", // string | object | array
+  entry: entrys, // string | object | array
   // 这里应用程序开始执行
   // webpack 开始打包
 
@@ -78,11 +133,6 @@ module.exports = {
       }
     }),
     new CleanWebpackPlugin(['./dist']),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'src/pages/index.tpl'
-    }),
     new webpack.optimize.UglifyJsPlugin(),
-    
-  ]
+  ].concat(pluginList),
 }
