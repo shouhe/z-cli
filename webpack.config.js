@@ -1,6 +1,7 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CleanWebpackPlugin =require('clean-webpack-plugin');
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   entry: "./src/main", // string | object | array
@@ -13,7 +14,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"), // string
     filename: "[name]-[hash].js", // string
     // 「入口分块(entry chunk)」的文件名模板（出口分块？）
-    publicPath: "/dist/", // string
+    publicPath: "/", // string
     // 输出解析文件的目录，url 相对于 HTML 页面
     library: "library", // string,
     // 导出库(exported library)的名称
@@ -86,18 +87,20 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/pages/index.tpl'
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ],
 
-  // devServer: {
-  //   proxy: { // proxy URLs to backend development server
-  //     // '/api': 'http://localhost:3000'
-  //   },
-  //   contentBase: path.join(__dirname, 'dist'), // boolean | string | array, static file location
-  //   compress: true, // enable gzip compression
-  //   historyApiFallback: true, // true for index.html upon 404, object for multiple paths
-  //   hot: true, // hot module replacement. Depends on HotModuleReplacementPlugin
-  //   https: false, // true for self-signed, object for cert authority
-  //   noInfo: true, // only errors & warns on hot reload
-  // }
+  devServer: {
+    proxy: { // proxy URLs to backend development server
+      '/api': 'http://localhost:3000'
+    },
+    port: 9000,
+    contentBase: path.join(__dirname, 'dist'), // boolean | string | array, static file location
+    compress: true, // enable gzip compression
+    historyApiFallback: true, // true for index.html upon 404, object for multiple paths
+    hot: true, // hot module replacement. Depends on HotModuleReplacementPlugin
+    https: false, // true for self-signed, object for cert authority
+    noInfo: true, // only errors & warns on hot reload
+  }
 }
