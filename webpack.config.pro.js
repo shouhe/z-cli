@@ -18,7 +18,8 @@ function getDirectory(relativePath) {
       res.push(file)
     } else {
       let _file = {};
-      _file.filename =  file.replace(/tpl/, 'html');
+      _file.name =  file.replace(/.tpl/, '');
+      _file.filename = file.replace(/.tpl/, '/') + 'index.html';
       _file.template = path;
       _file.js = file.replace(/tpl/, 'js');
       res.push(_file)
@@ -40,13 +41,10 @@ function getEntrys() {
 function getPlugin(tplDirs) {
   let data = [];
   tplDirs.forEach(function(item) {
-    console.log(item.js);
     let _Plugin = new HtmlWebpackPlugin({
-      files: {
-        filename: item.filename,
-        template: item.template,
-        js:  [item.js]
-      }
+      filename: item.filename,
+      template: item.template,
+      chunks: [item.name]
     });
     data.push(_Plugin);
   })
@@ -59,21 +57,17 @@ var pluginList = getPlugin(tplDirs);
 
 
 module.exports = {
-  entry: entrys, // string | object | array
-  // 这里应用程序开始执行
-  // webpack 开始打包
+  entry: entrys, 
 
   output: {
-    // webpack 如何输出结果的相关选项
     path: path.resolve(__dirname, "dist"), 
-    filename: "[name]-[hash].js", 
+    filename: "[name]/[name]-[hash].js", 
     publicPath: "/dist/", 
     library: "library", 
     libraryTarget: "umd", 
   },
 
   module: {
-    // 关于模块配置
 
     rules: [
       {
@@ -98,9 +92,7 @@ module.exports = {
           "dot-loader"
         ]
       }
-    ],
-
-    /* 高级模块配置（点击展示） */
+    ]
   },
 
   resolve: {
@@ -116,13 +108,11 @@ module.exports = {
   },
 
 
-  devtool: "source-map", // enum
-  // 通过在浏览器调试工具(browser devtools)中添加元信息(meta info)增强调试
-  // 牺牲了构建速度的 `source-map' 是最详细的。
+  devtool: "source-map", 
 
   context: __dirname, 
 
-  target: "web", // 枚举
+  target: "web", 
 
   stats: "errors-only",
   
@@ -133,6 +123,6 @@ module.exports = {
       }
     }),
     new CleanWebpackPlugin(['./dist']),
-    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.UglifyJsPlugin()
   ].concat(pluginList),
 }
