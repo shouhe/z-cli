@@ -124,5 +124,10 @@ module.exports = {
     }),
     new CleanWebpackPlugin(['./dist']),
     new webpack.optimize.UglifyJsPlugin()
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'common',
+    //   filename: "common.js",
+
+    // })
   ].concat(pluginList),
 }
