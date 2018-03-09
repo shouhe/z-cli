@@ -118,9 +118,18 @@ module.exports = {
 
     devServer: {
         proxy: {
-            '/api': 'http://localhost'
+            "/api": {
+                target: "http://****"
+            },
+            changeOrigin: true,
+            router: {
+                // when request.headers.host == 'dev.localhost:3000',
+                // override target 'http://www.example.org' to 'http://localhost:8000'
+                'dev.mogujie.com:9000/api' : 'http://mogujie.xiaodian.com/api'
+            }
         },
         port: 9000,
+        disableHostCheck: true,
         index: 'index/index.html',
         contentBase: path.join(__dirname, 'dist'),
         compress: true,

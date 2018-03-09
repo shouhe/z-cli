@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --progress --output-pathinfo",
+    "dev": "webpack-dev-server --progress --output-pathinfo --public",
     "build": "webpack --progress --output-pathinfo --config webpack.config.pro.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "webpack-dev-server --compress --color"
