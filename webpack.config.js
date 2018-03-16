@@ -62,7 +62,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "[name]-[hash].js",
-        publicPath: "/",
+        publicPath: "/asset/",
         library: "library",
         libraryTarget: "umd",
     },
@@ -119,16 +119,17 @@ module.exports = {
     devServer: {
         proxy: {
             "/api": {
-                target: "http://****"
+                target: "http://localhost:80"
             },
             changeOrigin: true,
             router: {
                 // when request.headers.host == 'dev.localhost:3000',
                 // override target 'http://www.example.org' to 'http://localhost:8000'
-                'dev.mogujie.com:9000/api' : 'http://mogujie.xiaodian.com/api'
+                // 'mogujie.mogujie.com:9000/api' : 'http://mogujie.xiaodian.com/api'
             }
         },
         port: 9000,
+        publicPath: '/asset/',
         disableHostCheck: true,
         index: 'index/index.html',
         contentBase: path.join(__dirname, 'dist'),
@@ -136,6 +137,6 @@ module.exports = {
         historyApiFallback: true,
         hot: true,
         https: false,
-        noInfo: true
+        noInfo: false
     }
 }

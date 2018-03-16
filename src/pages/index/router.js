@@ -5,7 +5,8 @@ import Items from './components/items';
 
 export default (
   <Router history={ hashHistory }>
-    <Route path='/' component={ App }/>
-    <Route path='/item' component={ Items }/>
+    <Route path='/' component={ App }>
+      <Route path='item' component={ Items }/>
+    </Route>
   </Router>
 );

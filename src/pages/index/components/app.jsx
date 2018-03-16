@@ -32,6 +32,7 @@ export default class App extends Component {
         return <div>
             <h1>
                 {msg}
+                <a href="/item">link</a>
             </h1>
         </div>
     }

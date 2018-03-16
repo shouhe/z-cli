@@ -6,7 +6,7 @@
   <title>login</title>
 </head>
 <body>
-  <div id='app'></div>
+  <div id='app'>dssdadsa</div>
   <script></script>
 </body>
 </html>
