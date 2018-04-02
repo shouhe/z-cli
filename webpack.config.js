@@ -125,7 +125,6 @@ module.exports = {
             router: {
                 // when request.headers.host == 'dev.localhost:3000',
                 // override target 'http://www.example.org' to 'http://localhost:8000'
-                // 'mogujie.mogujie.com:9000/api' : 'http://mogujie.xiaodian.com/api'
             }
         },
         port: 9000,
