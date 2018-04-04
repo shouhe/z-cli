@@ -30,8 +30,9 @@
     "jsx-control-statements": "^3.2.8",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
+    "rc-queue-anim": "^1.4.1",
     "style-loader": "^0.19.0",
-    "webpack-dev-server": "^2.9.4",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4"
   }
 }

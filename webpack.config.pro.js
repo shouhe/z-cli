@@ -62,7 +62,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"), 
     filename: "[name]/[name]-[hash].js", 
-    publicPath: "/dist/", 
+    publicPath: "/dist",  //相当于打包时给静态资源加了一个前缀
     library: "library", 
     libraryTarget: "umd", 
   },

@@ -44,7 +44,8 @@ function getPlugin(tplDirs) {
         let _Plugin = new HtmlWebpackPlugin({
             filename: item.filename,
             template: item.template,
-            chunks: [item.name]
+            chunks: [item.name],
+            publicPath: item.name
         });
         data.push(_Plugin);
     })
@@ -59,10 +60,12 @@ let pluginList = getPlugin(tplDirs);
 module.exports = {
     entry: entrys,
 
+    devtool: 'inline-source-map',
+
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "[name]-[hash].js",
-        publicPath: "/asset/",
+        filename: "[name]/[name]-[hash].js",
+        publicPath: "http://localhost:9000/",
         library: "library",
         libraryTarget: "umd",
     },
@@ -99,7 +102,7 @@ module.exports = {
             "node_modules",
             path.resolve(__dirname, "src")
         ],
-        extensions: [".js", ".json", ".jsx", ".css"],
+        extensions: [".js", ".json", ".jsx", ".css", ".html"],
         alias: {
             'Common': './src/common'
         },
@@ -128,14 +131,17 @@ module.exports = {
             }
         },
         port: 9000,
-        publicPath: '/asset/',
+        publicPath: '/', //dev sever路径 当前output目录 => dist
         disableHostCheck: true,
         index: 'index/index.html',
-        contentBase: path.join(__dirname, 'dist'),
+        contentBase: path.join(__dirname, "asset"), //提供查看静态资源的地址  localhost/asset就是当前工组目录
         compress: true,
         historyApiFallback: true,
         hot: true,
         https: false,
-        noInfo: false
+        noInfo: false,
+        staticOptions: {
+            redirect: true
+        }
     }
 }
