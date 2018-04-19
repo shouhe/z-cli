@@ -3,7 +3,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
-
+var theme = require('./theme');
 function getDirectory(relativePath) {
     let res = [];
     let root = path.resolve(__dirname, relativePath);
@@ -52,7 +52,7 @@ function getPlugin(tplDirs) {
 }
 
 var entrys = getEntrys();
-var tplDirs = getDirectory('../views');
+var tplDirs = getDirectory('./views');
 var pluginList = getPlugin(tplDirs);
 
 
