@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import QueueAnim from 'rc-queue-anim';
+import {Button} from 'antd';
 
 export default class App extends React.Component{
     state = {
@@ -14,7 +15,7 @@ export default class App extends React.Component{
         return (
             <div className="queue-demo">
                 <p className="buttons">
-                    <button type="primary" onClick={this.onClick}>切换</button>
+                    <Button type="primary" onClick={this.onClick}>切换</Button>
                 </p>
                 <QueueAnim className="demo-content"
                            animConfig={[

@@ -3,6 +3,12 @@ let CleanWebpackPlugin = require('clean-webpack-plugin');
 let path = require('path');
 let webpack = require('webpack');
 let fs = require('fs');
+let theme = require('./theme.js');
+let autoprefixer =require('autoprefixer');
+let rucksack = require('rucksack-css');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+console.log(theme);
 
 function getDirectory(relativePath) {
     let res = [];
@@ -85,9 +91,19 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                loader: 'style!css!less'
+                exclude: path.resolve(__dirname, 'node_modules'),
+                loader: `css!postcss!less?{"sourceMap":true}`
             },
-
+            {
+                test: /\.less$/,
+                include: path.resolve(__dirname, 'node_modules/antd'),
+                loader: `style-loader!css-loader!less-loader?{"sourceMap":true, modifyVars: ${JSON.stringify(theme)}}`
+            },
+            {
+                test: /\.css$/,
+                include: path.resolve(__dirname, 'node_modules/antd'),
+                loader: "style-loader!css-loader"
+            },
             {
                 test: /\.tpl$/,
                 use: [
@@ -98,16 +114,11 @@ module.exports = {
     },
 
     resolve: {
-        modules: [
-            "node_modules",
-            path.resolve(__dirname, "src")
-        ],
         extensions: [".js", ".json", ".jsx", ".css", ".html"],
         alias: {
             'Common': './src/common'
         },
     },
-
 
     devtool: "source-map", // enum
     externals: {},
@@ -116,7 +127,17 @@ module.exports = {
     stats: "errors-only",
 
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: [
+                    rucksack(),
+                    autoprefixer({
+                        browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4'],
+                    }),
+                ]
+            }
+        })
     ].concat(pluginList),
 
     devServer: {
