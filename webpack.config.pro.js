@@ -118,6 +118,12 @@ module.exports = {
         },
     },
 
+    externals: {
+        'redux': 'Redux',
+        'react-dom': 'ReactDOM',
+        'react-router': 'ReactRouter'
+    },
+
 
     devtool: "source-map",
 

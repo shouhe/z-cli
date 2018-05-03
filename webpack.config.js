@@ -120,6 +120,12 @@ module.exports = {
         },
     },
 
+    externals: {
+        'redux': 'Redux',
+        'react-dom': 'ReactDOM',
+        'react-router': 'ReactRouter'
+    },
+
     devtool: "source-map", // enum
     externals: {},
     context: __dirname,

@@ -11,34 +11,22 @@ export default class App extends React.Component{
             show: !this.state.show
         });
     }
+
+    dragStart=(e)=> {
+        console.log(e.target)
+    }
     render() {
         return (
             <div className="queue-demo">
                 <p className="buttons">
                     <Button type="primary" onClick={this.onClick}>切换</Button>
                 </p>
-                <QueueAnim className="demo-content"
-                           animConfig={[
-                               { opacity: [1, 0], translateX: [0, 50] },
-                               { opacity: [1, 0], translateX: [0, 50] }
-                           ]}>
-                    {this.state.show ? [
-                        <div className="demo-thead" key="a">
-                            <ul>
-                                <li />
-                                <li />
-                                <li />
-                            </ul>
-                        </div>,
-                        <div className="demo-tbody" key="b">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                        </div>
-                    ] : null}
-                </QueueAnim>
+                <ul>
+                    <li draggable={true} onDragStart={this.dragStart}>1111</li>
+                    <li draggable={true}>2222</li>
+                    <li draggable={true}>3333</li>
+                    <li draggable={true}>4444</li>
+                </ul>
             </div>
         );
     }

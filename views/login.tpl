@@ -7,6 +7,8 @@
 </head>
 <body>
   <div id='app'></div>
-  <script></script>
+  <script src="https://cdn.bootcss.com/react/15.6.1/react.min.js"></script>
+  <script src="https://cdn.bootcss.com/react/15.6.1/react-dom.min.js"></script>
+  <script src="https://cdn.bootcss.com/react-router/2.8.1/ReactRouter.min.js"></script>
 </body>
 </html>
